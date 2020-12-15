@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
-import * as Google from "expo-google-app-auth"
+import * as Google from 'expo-google-app-auth';
+import * as GoogleSignIn from 'expo-google-sign-in';
 
 class LoginScreen extends Component {
 
@@ -14,6 +15,7 @@ class LoginScreen extends Component {
          });
 
          if (result.type === 'success') {
+            console.log("USER: " + result.user);
             return result.accessToken;
          } else {
             return { cancelled: true };

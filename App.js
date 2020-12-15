@@ -6,10 +6,17 @@ import LoginScreen from './screens/LoginScreen'
 import LoadingScreen from './screens/LoadingScreen'
 import DashboardScreen from './screens/DashboardScreen'
 
-import firebase from './firebase';
+import * as firebase from 'firebase';
+import { firebaseConfig } from './config';
 
-export default function App() {
-  return <AppNavigator />;
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+
+export default class App extends React.Component {
+  render() {
+    return <AppNavigator />;
+  }
 }
 
 const AppSwitchNavigator = createSwitchNavigator({
