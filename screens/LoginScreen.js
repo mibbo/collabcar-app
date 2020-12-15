@@ -35,16 +35,30 @@ class LoginScreen extends Component {
                googleUser.accessToken
             )
             // Sign in with credential from the Google user.
-            firebase.auth().signInWithCredential(credential).catch((error) => {
-               // Handle Errors here.
-               var errorCode = error.code;
-               var errorMessage = error.message;
-               // The email of the user's account used.
-               var email = error.email;
-               // The firebase.auth.AuthCredential type that was used.
-               var credential = error.credential;
-               // ...
-            });
+            firebase.auth().signInWithCredential(credential)
+               //----------------lisätty itse---------------------------
+               .then(function (result) {
+                  console.log('user signed in');
+                  firebase.database().ref('/users/' + result.user.uid)
+                     .set({
+                        gmail: result.user.email,
+                        profile_picture: result.additionalUserInfo.profile.picture,
+                        locale: result.additionalUserInfo.profile.locale,
+                        first_name: result.additionalUserInfo.profile.given_name,
+                        last_name: result.additionalUserInfo.profile.family_name
+                     })
+               })
+               //---------------------------------------------------------
+               .catch((error) => {
+                  // Handle Errors here.
+                  var errorCode = error.code;
+                  var errorMessage = error.message;
+                  // The email of the user's account used.
+                  var email = error.email;
+                  // The firebase.auth.AuthCredential type that was used.
+                  var credential = error.credential;
+                  // ...
+               });
          } else {
             console.log('User already signed-in Firebase.');
          }
