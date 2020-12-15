@@ -29,8 +29,6 @@ class LoginScreen extends Component {
          if (!this.isUserEqual(googleUser, firebaseUser)) {
             // Build Firebase credential with the Google ID token.
             var credential = firebase.auth.GoogleAuthProvider.credential(
-               // TARKISTA KUMPI TOIMII
-               // googleUser.getAuthResponse().id_token);
                googleUser.idToken,
                googleUser.accessToken
             )
@@ -39,14 +37,24 @@ class LoginScreen extends Component {
                //----------------lisätty itse---------------------------
                .then(function (result) {
                   console.log('user signed in');
-                  firebase.database().ref('/users/' + result.user.uid)
-                     .set({
-                        gmail: result.user.email,
-                        profile_picture: result.additionalUserInfo.profile.picture,
-                        locale: result.additionalUserInfo.profile.locale,
-                        first_name: result.additionalUserInfo.profile.given_name,
-                        last_name: result.additionalUserInfo.profile.family_name
-                     })
+                  if (result.additionalUserInfo.isNewUser) {
+                     firebase
+                        .database().ref('/users/' + result.user.uid)
+                        .set({
+                           gmail: result.user.email,
+                           profile_picture: result.additionalUserInfo.profile.picture,
+                           locale: result.additionalUserInfo.profile.locale,
+                           first_name: result.additionalUserInfo.profile.given_name,
+                           last_name: result.additionalUserInfo.profile.family_name,
+                           created_at: Date.now()
+                        })
+                  } else {
+                     firebase
+                        .database().ref('/users/' + result.user.uid)
+                        .update({
+                           last_logged_in: Date.now()
+                        })
+                  }
                })
                //---------------------------------------------------------
                .catch((error) => {
@@ -75,7 +83,6 @@ class LoginScreen extends Component {
          });
 
          if (result.type === 'success') {
-            console.log("USER: " + result.user);
             this.onSignIn(result);
             return result.accessToken;
          } else {
