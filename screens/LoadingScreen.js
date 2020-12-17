@@ -12,7 +12,7 @@ class LoadingScreen extends Component {
          function (user) {
             console.log('AUTH STATE CHANGED CALLED ')
             if (user) {
-               this.props.navigation.navigate('DashboardScreen');
+               this.props.navigation.navigate('ProfileScreen');
             } else {
                this.props.navigation.navigate('LoginScreen');
             }
