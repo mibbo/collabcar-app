@@ -7,6 +7,7 @@ const colors = {
    txtPlaceholder: "grey",
    borderColor: "#E9E9E9",
    logoColor: "#2ca2d8",
+   bgFailure: "#aa1818",
 };
 
 export default colors;

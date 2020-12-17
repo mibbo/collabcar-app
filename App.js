@@ -13,11 +13,24 @@ import ProfileScreen from './screens/ProfileScreen';
 import * as firebase from 'firebase';
 import { firebaseConfig } from './config';
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
+
+class App extends React.Component {
+  constructor() {
+    super();
+    this.initializeFirebase();
+  }
+  initializeFirebase = () => {
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+  }
+  render() {
+    return <AppContainer />
+  }
 }
 
-const App = () => <AppContainer />;
+
+
 
 // const LoginStackNavigator = createStackNavigator({
 //   // WelcomeScreen: {
