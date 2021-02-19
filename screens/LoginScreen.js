@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 import * as Google from 'expo-google-app-auth';
-import * as GoogleSignIn from 'expo-google-sign-in';
+// for standalone app
+//import * as GoogleSignIn from 'expo-google-sign-in';
 import firebase from 'firebase';
+import CustomButton from '../components/CustomButton';
+import colors from '../assets/colors';
+import { Ionicons } from '@expo/vector-icons'
 
 class LoginScreen extends Component {
 
@@ -81,7 +85,6 @@ class LoginScreen extends Component {
             iosClientId: '258768037462-ggntq49j42dorockmtj3ueu3mbvc6o69.apps.googleusercontent.com',
             scopes: ['profile', 'email'],
          });
-
          if (result.type === 'success') {
             this.onSignIn(result);
             return result.accessToken;
@@ -93,24 +96,37 @@ class LoginScreen extends Component {
       }
    }
 
-
    render() {
       return (
-         <View style={styles.container}>
-            <Button
-               title="Sign In With Google"
-               onPress={() => this.signInWithGoogleAsync()}
-            />
+         <View style={{ flex: 1, backgroundColor: colors.bgMain }}>
+            <View
+               style={{
+                  flex: 1,
+                  marginTop: 150,
+                  borderColor: 'black',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+               }}>
+               <Ionicons name="ios-car" size={150} color={colors.logoColor} />
+               <Text style={{ fontSize: 50, fontFamily: "", fontWeight: '100', color: 'white' }}>
+                  CollabCar
+                  </Text>
+            </View>
+            <View
+               style={{ flex: 1, alignItems: 'center' }}>
+               <CustomButton
+                  style={{
+                     width: 200,
+                     backgroundColor: 'transparent',
+                     borderWidth: 0.5,
+                     borderColor: colors.bgGoogle
+                  }}
+                  onPress={() => this.signInWithGoogleAsync()}>
+                  <Text style={{ fontWeight: '100', fontFamily: "", color: 'white' }}>Sign up with Google</Text>
+               </CustomButton>
+            </View>
          </View>
       );
    }
 }
 export default LoginScreen;
-
-const styles = StyleSheet.create({
-   container: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center'
-   }
-});
