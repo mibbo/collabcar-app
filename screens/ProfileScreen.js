@@ -21,12 +21,12 @@ class ProfileScreen extends Component {
 
    //const [profile, setProfileData] = useState({})
 
-   componentDidMount = () => {
+   //componentDidMount = () => {
       //this.getCurrentUser()
       //console.log(GLOBAL.profileScreen)
-   } 
+   //} 
 
-   getCurrentUser = () => {
+  /* getCurrentUser = () => {
       var user_id = firebase.auth().currentUser.uid
                      firebase
                      .database()
@@ -44,10 +44,8 @@ class ProfileScreen extends Component {
       //var name = userData.first_name
       //console.log("name:", name)
       //setProfileData({'name': name, 'email': email, 'photoUrl': photoUrl})
+   } */
 
-
-
-   }
    render() {
       return (
          <View style={{ flex: 1, backgroundColor: colors.bgMain }}>
