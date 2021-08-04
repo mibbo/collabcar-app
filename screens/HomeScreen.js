@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, Button, TextInput, Keyboard, ScrollView} from 'react-native';
 import firebase from 'firebase';
 import CustomButton from '../components/CustomButton'
 import colors from '../assets/colors'
+import Mileage from '../components/mileage'
+import GLOBAL from '../components/global.js'
 
 class HomeScreen extends Component {
+
+
+
    render() {
       return (
          <View style={{ flex: 1, backgroundColor: colors.bgMain }}>
@@ -16,7 +21,17 @@ class HomeScreen extends Component {
                   justifyContent: "center",
                }}
             >
+
+               {/* Balance */}
+               
                <Text>HomeScreen</Text>
+               <View>
+                  <Text style={{color: 'white', marginBottom: 20}}>Balance: </Text>
+               </View>
+
+               {/* Mileage */}
+               <Mileage></Mileage>
+
                <CustomButton
                   style={{
                      width: 200,
