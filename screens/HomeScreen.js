@@ -3,9 +3,9 @@ import { View, Text, StyleSheet, Button, TextInput, Keyboard, ScrollView} from '
 import firebase from 'firebase';
 import CustomButton from '../components/CustomButton'
 import colors from '../assets/colors'
-import Mileage from '../components/mileage'
-import Refill from '../components/refill'
-import GLOBAL from '../components/global.js'
+import Mileage from '../components/Mileage'
+import Refill from '../components/Refill'
+import GLOBAL from '../global.js'
 
 class HomeScreen extends Component {
 

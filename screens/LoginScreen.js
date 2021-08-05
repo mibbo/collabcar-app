@@ -7,7 +7,7 @@ import firebase from 'firebase';
 import CustomButton from '../components/CustomButton';
 import colors from '../assets/colors';
 import { Ionicons } from '@expo/vector-icons'
-import GLOBAL from '../components/global.js'
+import GLOBAL from '../global.js'
 
 class LoginScreen extends Component {
 

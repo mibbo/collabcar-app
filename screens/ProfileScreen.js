@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet, Button } from 'react-native';
 import firebase from 'firebase';
 import colors from '../assets/colors'
 import CustomButton from '../components/CustomButton'
-import GLOBAL from '../components/global.js'
+import GLOBAL from '../global.js'
 
 
 

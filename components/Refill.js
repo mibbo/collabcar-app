@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Button, TextInput, Keyboard, ScrollView} from '
 import firebase from 'firebase';
 import CustomButton from './CustomButton'
 import colors from '../assets/colors'
-import GLOBAL from './global.js'
+import GLOBAL from '../global.js'
 import Modal from 'react-native-modal';
 import {theme, fonts, padding, dimensions} from '../styles.js'
 
