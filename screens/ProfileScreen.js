@@ -14,46 +14,46 @@ class ProfileScreen extends Component {
       this.state = {
          first_name: '',
          last_name: '',
-         email:'',
+         email: '',
          picture: {}
       };
-    }
+   }
 
    //const [profile, setProfileData] = useState({})
 
    //componentDidMount = () => {
-      //this.getCurrentUser()
-      //console.log(GLOBAL.profileScreen)
+   //this.getCurrentUser()
+   //console.log(GLOBAL.profileScreen)
    //} 
 
-  /* getCurrentUser = () => {
-      var user_id = firebase.auth().currentUser.uid
-                     firebase
-                     .database()
-                     .ref('/users/' + user_id)
-                     .once('value')
-                     .then(snapshot => {
-                        console.log(snapshot.val())
-                        this.setState(prevState => ({
-                           ...prevState,
-                           first_name: snapshot.val().first_name,
-                           picture: {uri: snapshot.val().profile_picture}
-                        }));
-                     })
-                     
-      //var name = userData.first_name
-      //console.log("name:", name)
-      //setProfileData({'name': name, 'email': email, 'photoUrl': photoUrl})
-   } */
+   /* getCurrentUser = () => {
+       var user_id = firebase.auth().currentUser.uid
+                      firebase
+                      .database()
+                      .ref('/users/' + user_id)
+                      .once('value')
+                      .then(snapshot => {
+                         console.log(snapshot.val())
+                         this.setState(prevState => ({
+                            ...prevState,
+                            first_name: snapshot.val().first_name,
+                            picture: {uri: snapshot.val().profile_picture}
+                         }));
+                      })
+                      
+       //var name = userData.first_name
+       //console.log("name:", name)
+       //setProfileData({'name': name, 'email': email, 'photoUrl': photoUrl})
+    } */
 
    render() {
       return (
          <View style={{ flex: 1, backgroundColor: colors.bgMain }}>
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginVertical: 200, marginHorizontal: 40, backgroundColor: colors.bgGoogle }}>
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginVertical: 200, marginHorizontal: 40, backgroundColor: colors.bgSecondaryBackground }}>
                <Text>Profile</Text>
                <Text>{GLOBAL.profileScreen.state.first_name + " " + GLOBAL.profileScreen.state.last_name}</Text>
                <Text>{GLOBAL.profileScreen.state.gmail}</Text>
-               <Image source={GLOBAL.profileScreen.state.profile_picture} style = {{height: 100, width: 100, resizeMode : 'stretch', margin: 5 }}></Image>
+               <Image source={GLOBAL.profileScreen.state.profile_picture} style={{ height: 100, width: 100, resizeMode: 'stretch', margin: 5 }}></Image>
                <CustomButton
                   style={{
                      width: 200,

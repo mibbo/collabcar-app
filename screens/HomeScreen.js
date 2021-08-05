@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Button, TextInput, Keyboard, ScrollView} from 'react-native';
+import { View, Text, StyleSheet, Button, TextInput, Keyboard, ScrollView } from 'react-native';
 import firebase from 'firebase';
 import CustomButton from '../components/CustomButton'
 import colors from '../assets/colors'
@@ -14,12 +14,12 @@ class HomeScreen extends Component {
       this.state = {
          showMileage: false,
       };
-    }
+   }
 
    toggleManualMileage = () => {
       this.setState({ showMileage: !this.state.showMileage });
    }
-   
+
 
 
    render() {
@@ -35,10 +35,10 @@ class HomeScreen extends Component {
             >
 
                {/* Balance */}
-               
+
                <Text>HomeScreen</Text>
                <View>
-                  <Text style={{color: 'white', marginBottom: 20}}>Balance: </Text>
+                  <Text style={{ color: 'white', marginBottom: 20 }}>Balance: </Text>
                </View>
 
                {/* Mileage */}
@@ -49,30 +49,33 @@ class HomeScreen extends Component {
                <Refill></Refill>
 
 
-               <CustomButton
-                  style={{
-                     width: 200,
-                     backgroundColor: colors.bgFailure,
-                     borderWidth: 0.5,
-                     borderColor: colors.bgFailure,
-                     marginBottom: 10,
-                  }}
-                  title="Login in"
-                  onPress={() => firebase.auth().signOut()}
-               >
-                  <Text style={{ fontWeight: "100", fontFamily: "", color: "white" }}>Sign Out</Text>
-               </CustomButton>
+
                <CustomButton
                   style={{
                      width: 200,
                      backgroundColor: colors.bgPrimary,
                      borderWidth: 0.5,
                      borderColor: colors.bgError,
+                     margin: 5,
                   }}
                   title="Profile"
                   onPress={() => this.props.navigation.navigate("ProfileScreen")}
                >
                   <Text style={{ fontWeight: "100", fontFamily: "", color: "white" }}>Profile</Text>
+               </CustomButton>
+
+               <CustomButton
+                  style={{
+                     width: 200,
+                     backgroundColor: colors.bgFailure,
+                     borderWidth: 0.5,
+                     borderColor: colors.bgFailure,
+                     margin: 5,
+                  }}
+                  title="Login in"
+                  onPress={() => firebase.auth().signOut()}
+               >
+                  <Text style={{ fontWeight: "100", fontFamily: "", color: "white" }}>Sign Out</Text>
                </CustomButton>
 
                <CustomButton
