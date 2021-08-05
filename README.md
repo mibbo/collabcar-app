@@ -12,7 +12,7 @@ The idea came when our friend group of 6 decided to buy a car, but we are someti
 - Kilometer tracking
 
 ## Technology
-- React as frontend and Google Firebase as backend. 
+- React Native as frontend and Google Firebase as backend. 
 
 ## How to setup environment
 
