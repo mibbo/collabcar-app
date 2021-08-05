@@ -75,16 +75,18 @@ class Refill extends Component {
                hideModalContentWhileAnimating={false}>
 
                <View style={styles.container}>
-                  <Text style={styles.title}>Refill amount</Text>
-                  <TextInput
-                        style={{}}
-                        placeholder="Enter mileage"
-                        placeholderTextColor="gray"
-                        keyboardType="numeric"
-                        value={this.state.mileage}
-                        onChangeText={this.handleRefillChange}
-                        >
-                  </TextInput>
+                  <View style={{width: 250}}>
+                     <Text style={styles.title}>Refill amount</Text>
+                     <TextInput
+                           style={{backgroundColor: '#454F63', color: 'gray', height: 50, paddingLeft: 10, fontSize: theme.textVariants.body.fontSize, marginBottom: 10, marginTop: 10, borderRadius: 8}}
+                           placeholder="Enter amount"
+                           placeholderTextColor="gray"
+                           keyboardType="numeric"
+                           value={this.state.mileage}
+                           onChangeText={this.handleRefillChange}
+                           >
+                     </TextInput>
+                  </View>
 
                   <View style={{flexDirection: 'row', marginTop: 50}}>
                         <CustomButton 
@@ -136,7 +138,7 @@ const styles = StyleSheet.create({
    },
    container: {
        borderRadius: 15,
-       height: '50%',
+       height: 400,
        justifyContent: "center",
        alignItems: "center",
        backgroundColor:theme.colors.primary

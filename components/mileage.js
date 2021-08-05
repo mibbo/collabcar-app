@@ -11,8 +11,9 @@ class Mileage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-           mileage: '',
-           consumption: '',
+           mileage: 0,
+           avgConsumption: 0,
+           tripConsumption: 0,
            isVisible: false
         };
       }
@@ -21,15 +22,23 @@ class Mileage extends Component {
         this.setState({isVisible: !this.state.isVisible})
     }
 
+    calcTripConsumption = () => {
+        let trip_consumption = parseFloat((this.state.mileage * (this.state.avgConsumption / 100)).toFixed(2))
+        //console.log(parseFloat(trip_consumption.toFixed(2)))
+        this.setState({tripConsumption: trip_consumption})
+        console.log(typeof(this.state.tripConsumption))
+    }
+
     sendMileage = () => {
         firebase
            .database()
-           .ref('/data/')
+           .ref('/trip/')
            .push()
            .set({
               uid: firebase.auth().currentUser.uid,
               mileage: this.state.mileage,
-              consumption: this.state.consumption,
+              avgConsumption: this.state.avgConsumption,
+              tripConsumption: this.state.tripConsumption,
               created: Date.now()
            })
            .then(result => {
@@ -44,18 +53,20 @@ class Mileage extends Component {
   
      handleMileageChange = (mileage) => {
         this.setState({mileage: mileage})
+        //this.calcTripConsumption()
      }
   
-     handleConsumptionChange = (consumption) => {
-        this.setState({consumption: consumption})
+     handleConsumptionChange = (avgConsumption) => {
+        this.setState({avgConsumption: avgConsumption})
+        //this.calcTripConsumption()
      }
   
      emptyInputs = () => {
-        this.setState({consumption: '', mileage: ''})
+        this.setState({avgConsumption: '', mileage: ''})
      }
   
      handleSubmit = () => {
-        if (this.state.mileage.trim() === "" || this.state.consumption.trim() === "") {
+        if (this.state.mileage.trim() === "" || this.state.avgConsumption.trim() === "") {
            this.setState(() => ({ valueError: "Values are required" }));
   
          } else {
@@ -80,29 +91,40 @@ class Mileage extends Component {
                 hideModalContentWhileAnimating={false}>
 
                 <View style={styles.container}>
-                    <Text style={styles.title}>Mileage</Text>
-                    <TextInput
-                        style={{}}
-                        placeholder="Enter mileage"
-                        placeholderTextColor="gray"
-                        keyboardType="numeric"
-                        value={this.state.mileage}
-                        onChangeText={this.handleMileageChange}
+                    <View style={{width: 250}}>
+                        <Text style={styles.title}>Mileage</Text>
+                        <TextInput
+                            style={{backgroundColor: '#454F63', color: 'gray', height: 50, paddingLeft: 10, fontSize: theme.textVariants.body.fontSize, marginBottom: 10, marginTop: 10, borderRadius: 8}}
+                            placeholder="Enter mileage"
+                            placeholderTextColor="gray"
+                            keyboardType="numeric"
+                            value={this.state.mileage}
+                            onChangeText={this.handleMileageChange}
+                            onEndEditing={this.calcTripConsumption}
+                            >
+                        </TextInput>
+
+                        <Text style={styles.title}>Consumption</Text>
+                        <TextInput
+                            style={{backgroundColor: '#454F63', color: 'gray', height: 50, paddingLeft: 10, fontSize: theme.textVariants.body.fontSize, marginBottom: 10, marginTop: 10, borderRadius: 8}}
+                            placeholder="Enter consumption"
+                            placeholderTextColor="gray"
+                            keyboardType="numeric"
+                            value={this.state.avgConsumption}
+                            onChangeText={this.handleConsumptionChange}
+                            onEndEditing={this.calcTripConsumption}
                         >
-                    </TextInput>
+                        </TextInput>
+                    </View>
 
-                    <Text style={styles.title}>Consumption</Text>
-                    <TextInput
-                        style={{}}
-                        placeholder="Enter consumption"
-                        placeholderTextColor="gray"
-                        keyboardType="numeric"
-                        value={this.state.consumption}
-                        onChangeText={this.handleConsumptionChange}
-                    >
-                    </TextInput>
+                    {/*Trip consumption*/}
+                    <Text style={{ fontWeight: "100", fontFamily: "", color: "white" }}>Total</Text>
+                    <View style={{flexDirection: 'row'}}>
+                        <Text style={{ fontSize: 20, fontFamily: "", color: "white" }}>{this.state.tripConsumption}</Text>
+                        <Text style={{ fontSize: 20, fontFamily: "", color: "white" }}> l</Text>
+                    </View>
 
-                    <View style={{flexDirection: 'row', marginTop: 50}}>
+                    <View style={{flexDirection: 'row', marginTop: 30}}>
                         <CustomButton 
                         style={styles.cancelButton}
                         title="Cancel"
@@ -153,7 +175,7 @@ const styles = StyleSheet.create({
     },
     container: {
         borderRadius: 15,
-        height: '50%',
+        height: 400,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor:theme.colors.primary
