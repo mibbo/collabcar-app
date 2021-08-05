@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Button, TextInput, Keyboard, ScrollView} from 'react-native';
 import firebase from 'firebase';
 import CustomButton from '../components/CustomButton'
-import colors from '../assets/colors'
 import GLOBAL from '../components/global.js'
 import Modal from 'react-native-modal';
+import {theme, fonts, padding, dimensions} from '../styles.js'
 
 class Mileage extends Component {
 
@@ -69,7 +69,7 @@ class Mileage extends Component {
     render() {
         return (
 
-        <View style={{paddingBottom: 100}}>
+        <View style={{marginBottom: 50}}>
             
             <Modal
                 transpartent={true}
@@ -79,7 +79,7 @@ class Mileage extends Component {
                 onBackdropPress={this.toggleMileageModal}
                 hideModalContentWhileAnimating={false}>
 
-                <View style={{borderRadius: 15, height: '50%', justifyContent: "center", alignItems: "center", backgroundColor:'#2A2E43'}}>
+                <View style={styles.container}>
                     <Text style={styles.title}>Mileage</Text>
                     <TextInput
                         style={{}}
@@ -151,9 +151,16 @@ const styles = StyleSheet.create({
         margin: 20,
         opacity: 0.95,
     },
+    container: {
+        borderRadius: 15,
+        height: '50%',
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor:theme.colors.primary
+    },
     submitButton: {
         borderRadius: 12,
-        backgroundColor: '#2D5D7B',
+        backgroundColor: theme.colors.accept,
         opacity: 1,
         top: 5,
         left: 5,
@@ -163,7 +170,7 @@ const styles = StyleSheet.create({
     },
     cancelButton: {
         borderRadius: 12,
-        backgroundColor: '#3ACCE1',
+        backgroundColor: theme.colors.cancel,
         opacity: 1,
         top: 5,
         left: 5,
@@ -173,7 +180,7 @@ const styles = StyleSheet.create({
     },
     openModalButton: {
         borderRadius: 12,
-        backgroundColor: '#2D5D7B',
+        backgroundColor: theme.colors.secondary,
         opacity: 1,
         top: 5,
         left: 5,
@@ -182,10 +189,10 @@ const styles = StyleSheet.create({
         marginRight: 10
     },
     title: {
-        fontFamily: 'sans-serif',
-        color: 'white', 
-        fontSize: 25,
-        fontWeight: "600",
-        letterSpacing: 0
+        fontFamily: theme.textVariants.header.fontFamily,
+        color: theme.textVariants.header.color, 
+        fontSize: theme.textVariants.header.fontSize,
+        fontWeight: theme.textVariants.header.fontWeight,
+        letterSpacing: theme.textVariants.header.letterSpacing
     }
  });
