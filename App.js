@@ -59,7 +59,7 @@ const HomeStackNavigator = createStackNavigator({
     navigationOptions: {
       // cardStyleInterpolator: forFade,
       headerTintColor: 'white',
-      headerStyle: { backgroundColor: colors.bgCollabCar },
+      headerStyle: { backgroundColor: colors.bgPrimary },
       cardStyle: { backgroundColor: 'transparent' },
       cardStyleInterpolator: noFlash
     }

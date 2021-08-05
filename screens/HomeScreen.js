@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, Button, TextInput, Keyboard, ScrollView } from 
 import firebase from 'firebase';
 import CustomButton from '../components/CustomButton'
 import colors from '../assets/colors'
-import Mileage from '../components/mileage'
-import Refill from '../components/refill'
+import MileageModal from '../components/MileageModal'
+import RefillModal from '../components/RefillModal'
 import GLOBAL from '../components/global.js'
 
 class HomeScreen extends Component {
@@ -19,8 +19,6 @@ class HomeScreen extends Component {
    toggleManualMileage = () => {
       this.setState({ showMileage: !this.state.showMileage });
    }
-
-
 
    render() {
       return (
@@ -42,11 +40,11 @@ class HomeScreen extends Component {
                </View>
 
                {/* Mileage */}
-               <Mileage></Mileage>
+               <MileageModal></MileageModal>
 
 
                {/* Refill */}
-               <Refill></Refill>
+               <RefillModal></RefillModal>
 
 
 
@@ -78,7 +76,7 @@ class HomeScreen extends Component {
                   <Text style={{ fontWeight: "100", fontFamily: "", color: "white" }}>Sign Out</Text>
                </CustomButton>
 
-               <CustomButton
+               {/* <CustomButton
                   position='top-left'
                   style={{
                      width: 20,
@@ -90,7 +88,7 @@ class HomeScreen extends Component {
                   onPress={() => this.props.navigation.navigate("LoginScreen")}
                >
                   <Text style={{ fontWeight: "100", color: "white" }}>!</Text>
-               </CustomButton>
+               </CustomButton> */}
             </View>
             <Text>HomeScreen</Text>
 
