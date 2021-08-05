@@ -7,8 +7,20 @@ import firebase from 'firebase';
 import CustomButton from '../components/CustomButton';
 import colors from '../assets/colors';
 import { Ionicons } from '@expo/vector-icons'
+import GLOBAL from '../components/global.js'
 
 class LoginScreen extends Component {
+
+   constructor() {
+      super();
+      this.state = {
+         gmail: '',
+         profile_picture: {},
+         first_name: '',
+         last_name: ''
+      }
+      GLOBAL.profileScreen = this;
+    }
 
    isUserEqual = (googleUser, firebaseUser) => {
       if (firebaseUser) {
@@ -59,6 +71,13 @@ class LoginScreen extends Component {
                            last_logged_in: Date.now()
                         })
                   }
+                  // Save current user data into global
+                  GLOBAL.profileScreen.setState({
+                     first_name: result.additionalUserInfo.profile.given_name,
+                     last_name: result.additionalUserInfo.profile.family_name,
+                     gmail: result.user.email,
+                     profile_picture: {uri: result.additionalUserInfo.profile.picture}
+                  });
                })
                //---------------------------------------------------------
                .catch((error) => {

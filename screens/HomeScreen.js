@@ -1,10 +1,27 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, Button, TextInput, Keyboard, ScrollView} from 'react-native';
 import firebase from 'firebase';
 import CustomButton from '../components/CustomButton'
 import colors from '../assets/colors'
+import Mileage from '../components/mileage'
+import Refill from '../components/refill'
+import GLOBAL from '../components/global.js'
 
 class HomeScreen extends Component {
+
+   constructor(props) {
+      super(props);
+      this.state = {
+         showMileage: false,
+      };
+    }
+
+   toggleManualMileage = () => {
+      this.setState({ showMileage: !this.state.showMileage });
+   }
+   
+
+
    render() {
       return (
          <View style={{ flex: 1, backgroundColor: colors.bgMain }}>
@@ -16,7 +33,22 @@ class HomeScreen extends Component {
                   justifyContent: "center",
                }}
             >
+
+               {/* Balance */}
+               
                <Text>HomeScreen</Text>
+               <View>
+                  <Text style={{color: 'white', marginBottom: 20}}>Balance: </Text>
+               </View>
+
+               {/* Mileage */}
+               <Mileage></Mileage>
+
+
+               {/* Refill */}
+               <Refill></Refill>
+
+
                <CustomButton
                   style={{
                      width: 200,
@@ -60,7 +92,7 @@ class HomeScreen extends Component {
             <Text>HomeScreen</Text>
 
          </View>
-      );
+      )
    }
 }
 export default HomeScreen;
