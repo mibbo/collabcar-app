@@ -36,8 +36,8 @@ class Mileage extends Component {
            .push()
            .set({
               uid: firebase.auth().currentUser.uid,
-              mileage: this.state.mileage,
-              avgConsumption: this.state.avgConsumption,
+              mileage: parseFloat(this.state.mileage),
+              avgConsumption: parseFloat(this.state.avgConsumption),
               tripConsumption: this.state.tripConsumption,
               created: Date.now()
            })

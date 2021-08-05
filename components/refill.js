@@ -28,7 +28,7 @@ class Refill extends Component {
          .push()
          .set({
             uid: firebase.auth().currentUser.uid,
-            refillAmount: this.state.refill,
+            refillAmount: parseFloat(this.state.refill),
             created: Date.now()
          })
          .then(result => {
