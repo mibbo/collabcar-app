@@ -8,11 +8,13 @@ import LoginScreen from './screens/LoginScreen';
 import LoadingScreen from './screens/LoadingScreen';
 import HomeScreen from './screens/HomeScreen';
 import ProfileScreen from './screens/ProfileScreen';
+import SettingsScreen from './screens/SettingsScreen';
+import CustomDrawerComponent from './components/CustomDrawerComponent';
 
 import * as firebase from 'firebase';
 import { firebaseConfig } from './config';
 import colors from './assets/colors';
-
+import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 
 class App extends React.Component {
   constructor() {
@@ -63,37 +65,53 @@ const HomeStackNavigator = createStackNavigator({
       cardStyle: { backgroundColor: 'transparent' },
       cardStyleInterpolator: noFlash
     }
+  },
+  SettingsScreen: {
+    screen: SettingsScreen,
+    navigationOptions: {
+      // cardStyleInterpolator: forFade,
+      headerTintColor: 'white',
+      headerStyle: { backgroundColor: colors.bgPrimary },
+      cardStyle: { backgroundColor: 'transparent' },
+      cardStyleInterpolator: noFlash
+    }
   }
 });
 
-// const Stack = createStackNavigator();
 
-
-
-// function MyStack() {
-//   return (
-//     <Stack.Navigator>
-//       <Stack.Screen
-//         name="Home"
-//         component={HomeScreen}
-//         screenOptions={{
-//           headerTintColor: 'black',
-//           headerStyle: { backgroundColor: 'tomato' },
-//         }}
-//       />
-//       <Stack.Screen
-//         name="Profile"
-//         component={ProfileScreen}
-//         options={{ cardStyleInterpolator: forFade }}
-//       />
-//     </Stack.Navigator>
-//   );
-// }
+const AppDrawerNavigator = createDrawerNavigator(
+  {
+    HomeStackNavigator: {
+      screen: HomeStackNavigator,
+      navigationOptions: {
+        title: 'Home',
+        drawerIcon: () => <Ionicons name="ios-home" size={24} />
+      }
+    },
+    ProfileScreen: {
+      screen: ProfileScreen,
+      navigationOptions: {
+        title: 'Profile',
+        drawerIcon: () => <FontAwesome5 name="user" size={24} color="black" />
+      }
+    },
+    SettingsScreen: {
+      screen: SettingsScreen,
+      navigationOptions: {
+        title: 'Settings',
+        drawerIcon: () => <Ionicons name="ios-settings" size={24} />
+      }
+    }
+  },
+  {
+    contentComponent: CustomDrawerComponent
+  }
+);
 
 const AppSwitchNavigator = createSwitchNavigator({
   LoadingScreen: LoadingScreen,
   LoginScreen: LoginScreen,
-  HomeStackNavigator
+  AppDrawerNavigator
 })
 
 

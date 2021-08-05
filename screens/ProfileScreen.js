@@ -19,6 +19,24 @@ class ProfileScreen extends Component {
       };
    }
 
+   componentDidMount() {
+      this.checkIfLoggedIn();
+   }
+   // componentWillMount() {
+   //    this.checkIfLoggedIn();
+   // }
+
+   checkIfLoggedIn = () => {
+      firebase.auth().onAuthStateChanged(
+         function (user) {
+            console.log('AUTH STATE CHANGED CALLED ')
+            if (!user) {
+               this.props.navigation.navigate('LoginScreen');
+            }
+         }.bind(this)
+      );
+   };
+
    //const [profile, setProfileData] = useState({})
 
    //componentDidMount = () => {

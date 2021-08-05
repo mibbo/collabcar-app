@@ -46,22 +46,6 @@ class HomeScreen extends Component {
                {/* Refill */}
                <RefillModal></RefillModal>
 
-
-
-               <CustomButton
-                  style={{
-                     width: 200,
-                     backgroundColor: colors.bgPrimary,
-                     borderWidth: 0.5,
-                     borderColor: colors.bgError,
-                     margin: 5,
-                  }}
-                  title="Profile"
-                  onPress={() => this.props.navigation.navigate("ProfileScreen")}
-               >
-                  <Text style={{ fontWeight: "100", fontFamily: "", color: "white" }}>Profile</Text>
-               </CustomButton>
-
                <CustomButton
                   style={{
                      width: 200,
@@ -75,6 +59,22 @@ class HomeScreen extends Component {
                >
                   <Text style={{ fontWeight: "100", fontFamily: "", color: "white" }}>Sign Out</Text>
                </CustomButton>
+
+
+               {/* <CustomButton
+                  style={{
+                     width: 200,
+                     backgroundColor: colors.bgPrimary,
+                     borderWidth: 0.5,
+                     borderColor: colors.bgError,
+                     margin: 5,
+                  }}
+                  title="Profile"
+                  onPress={() => this.props.navigation.navigate("ProfileScreen")}
+               >
+                  <Text style={{ fontWeight: "100", fontFamily: "", color: "white" }}>Profile</Text>
+               </CustomButton> */}
+
 
                {/* <CustomButton
                   position='top-left'
