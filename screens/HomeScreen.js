@@ -16,6 +16,31 @@ class HomeScreen extends Component {
       };
    }
 
+   componentDidMount() {
+      this.checkIfLoggedIn();
+   }
+
+   checkIfLoggedIn = () => {
+      firebase.auth().onAuthStateChanged(
+         function (user) {
+            // Save current user data into global
+            console.log('AUTH STATE CHANGED CALLED ')
+            if (user) {
+               console.log('------------------toimii------------------------------------------------');
+               GLOBAL.profileScreen.setState({
+                  first_name: user.additionalUserInfo.profile.given_name,
+                  last_name: user.additionalUserInfo.profile.family_name,
+                  gmail: user.user.email,
+                  profile_picture: { uri: user.additionalUserInfo.profile.picture }
+               });
+               this.props.navigation.navigate('AppDrawerNavigator');
+            } else {
+               this.props.navigation.navigate('LoginScreen');
+            }
+         }.bind(this)
+      );
+   };
+
    toggleManualMileage = () => {
       this.setState({ showMileage: !this.state.showMileage });
    }
