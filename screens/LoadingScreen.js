@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import firebase from '../firebase';
-import GLOBAL from '../global'
 
 class LoadingScreen extends Component {
    componentDidMount() {
@@ -11,11 +10,12 @@ class LoadingScreen extends Component {
    checkIfLoggedIn = () => {
       firebase.auth().onAuthStateChanged(
          function (user) {
-            // Save current user data into global
             console.log('LoadingScreen: AUTH STATE CHANGED CALLED ')
             if (user) {
                console.log('LoadingScreen: User connected --> switching to HomeScreen');
                this.props.navigation.navigate('AppDrawerNavigator');
+               console.log('logaako tämän?');
+
             } else {
                console.log('LoadingScreen: User not connected --> switching to LoginScreen');
                this.props.navigation.navigate('LoginScreen');

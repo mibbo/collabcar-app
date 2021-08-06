@@ -5,8 +5,6 @@ import CustomButton from '../components/CustomButton'
 import colors from '../assets/colors'
 import MileageModal from '../components/MileageModal'
 import RefillModal from '../components/RefillModal'
-import GLOBAL from '../global.js'
-import LoginScreen from './LoginScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class HomeScreen extends Component {
@@ -39,16 +37,9 @@ class HomeScreen extends Component {
    checkIfLoggedIn = async () => {
       firebase.auth().onAuthStateChanged(
          async function (user) {
-            // Save current user data into global
             console.log('HomeScreen: AUTH STATE CHANGED CALLED ')
-
-            // // user == currentUser
-            // const profile = firebase.auth().currentUser;
-
             if (user) {
                console.log('HomeScreen: User connected');
-
-               console.log('------------------------------------------------------------------------');
                console.log('HomeScreen: userData AsyncStoragesta HomeScreenin stateihin')
                var storageUserData = await this.getData();
                console.log(storageUserData);
@@ -57,13 +48,6 @@ class HomeScreen extends Component {
                   email: storageUserData.email,
                   picture: storageUserData.profilePicture
                })
-               console.log('------------------------------------------------------------------------');
-               console.log(this.state.fullName);
-               console.log(this.state.email);
-               console.log(this.state.picture);
-
-
-
                // Eli tää ei toimi sen takia, koska se yrittää päivittää ProfileScreenin stateja, mutta koska appi on vasta käynnistetty ja ProfileScreen on UnMounted tilassa eli sen stateja ei voi päivittää
                // elikkäselikkäs pitää miettiä joku muu ratkasu tälle globaalihommalle, tai ei ainakaan voida samallailla muitten komponenttien stateja muutella ihan millon halutaan
                // elieli niinkun Pauli sanois: pelataan sitä omaa peliä ei kavereitten peliä
@@ -73,8 +57,8 @@ class HomeScreen extends Component {
                //    profile_picture: { uri: user.photoURL }
                // });
             } else {
-               this.props.navigation.navigate('LoginScreen');
                console.log('HomeScreen: User not connected --> switching to LoginScreen');
+               this.props.navigation.navigate('LoginScreen');
             }
          }.bind(this)
       );

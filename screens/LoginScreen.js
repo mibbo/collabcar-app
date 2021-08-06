@@ -7,21 +7,13 @@ import firebase from 'firebase';
 import CustomButton from '../components/CustomButton';
 import colors from '../assets/colors';
 import { Ionicons } from '@expo/vector-icons'
-import GLOBAL from '../global.js'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class LoginScreen extends Component {
 
    constructor() {
       super();
-      this.state = {
-         gmail: '',
-         profile_picture: {},
-         first_name: '',
-         last_name: ''
-      }
       this.signInWithGoogleAsync = this.signInWithGoogleAsync.bind(this);
-      GLOBAL.profileScreen = this;
    }
 
    isUserEqual = (googleUser, firebaseUser) => {
@@ -75,12 +67,6 @@ class LoginScreen extends Component {
                            last_logged_in: Date.now()
                         })
                   }
-                  // Save current user data into global
-                  console.log('------------------------------------------------------------------------');
-                  console.log('LoginScreen: TAVAARAA GLOBAALII');
-                  console.log(result.user);
-                  console.log('------------------------------------------------------------------------');
-
                   var userData = {
                      fullName: result.user.displayName,
                      email: result.user.email,
@@ -96,25 +82,6 @@ class LoginScreen extends Component {
                      console.log(`Succesfully added ${userData.fullName}'s data in asyncStorage.`);
                   }
                   storeData(userData)
-
-                  console.log('----------------------------------------------');
-                  console.log(result.user.photoURL);
-                  console.log('----------------------------------------------');
-
-
-                  GLOBAL.profileScreen.setState({
-                     // first_name: result.additionalUserInfo.profile.given_name,
-                     // last_name: result.additionalUserInfo.profile.family_name,
-                     // gmail: result.user.email,
-                     // profile_picture: {
-                     //    uri: result.additionalUserInfo.profile.picture
-                     // }
-                     full_name: result.user.displayName,
-                     gmail: result.user.email,
-                     profile_picture: {
-                        uri: result.user.photoURL
-                     }
-                  });
                })
                //---------------------------------------------------------
                .catch((error) => {
