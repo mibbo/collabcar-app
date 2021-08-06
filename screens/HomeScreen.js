@@ -5,6 +5,7 @@ import CustomButton from '../components/CustomButton'
 import colors from '../assets/colors'
 import Mileage from '../components/Mileage'
 import Refill from '../components/Refill'
+import Balance from '../components/Balance'
 import GLOBAL from '../global.js'
 
 class HomeScreen extends Component {
@@ -33,13 +34,11 @@ class HomeScreen extends Component {
                   justifyContent: "center",
                }}
             >
-
-               {/* Balance */}
                
-               <Text>HomeScreen</Text>
-               <View>
-                  <Text style={{color: 'white', marginBottom: 20}}>Balance: </Text>
-               </View>
+               {/* Balance */}
+               <Balance></Balance>
+
+
 
                {/* Mileage */}
                <Mileage></Mileage>
