@@ -84,9 +84,7 @@ class LoginScreen extends Component {
                   var userData = {
                      fullName: result.user.displayName,
                      email: result.user.email,
-                     profilePicture: {
-                        uri: result.user.photoURL
-                     }
+                     profilePicture: result.user.photoURL
                   }
                   const storeData = async (value) => {
                      try {
@@ -98,6 +96,11 @@ class LoginScreen extends Component {
                      console.log(`Succesfully added ${userData.fullName}'s data in asyncStorage.`);
                   }
                   storeData(userData)
+
+                  console.log('----------------------------------------------');
+                  console.log(result.user.photoURL);
+                  console.log('----------------------------------------------');
+
 
                   GLOBAL.profileScreen.setState({
                      // first_name: result.additionalUserInfo.profile.given_name,

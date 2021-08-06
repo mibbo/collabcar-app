@@ -17,7 +17,7 @@ class HomeScreen extends Component {
          showMileage: false,
          fullName: '',
          email: '',
-         picture: {}
+         profilePicture: {}
       };
    }
 

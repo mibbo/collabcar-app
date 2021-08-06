@@ -7,7 +7,6 @@ import GLOBAL from '../global.js'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-
 class ProfileScreen extends Component {
 
    constructor(props) {
@@ -15,10 +14,23 @@ class ProfileScreen extends Component {
       this.state = {
          first_name: '',
          last_name: '',
+         full_name: '',
+         profile_picture: {},
          fullName: '',
          email: '',
-         picture: {}
+         profilePicture: 'https://lh3.googleusercontent.com/-CSnB1vmetB4/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucmiGwUT4UDeEpmDnrSYsSaa5FrjKQ/s96-c/photo.jpg'
       };
+   }
+
+   async componentDidMount() {
+      console.log('ProfileScreen: Setting states');
+
+      var storageUserData = await this.getData();
+      this.setState({
+         fullName: storageUserData.fullName,
+         email: storageUserData.email,
+         profilePicture: storageUserData.profilePicture
+      })
    }
 
    getData = async () => {
@@ -30,32 +42,6 @@ class ProfileScreen extends Component {
       }
       console.log('Done.')
    }
-   //const [profile, setProfileData] = useState({})
-
-   //componentDidMount = () => {
-   //this.getCurrentUser()
-   //console.log(GLOBAL.profileScreen)
-   //} 
-
-   /* getCurrentUser = () => {
-       var user_id = firebase.auth().currentUser.uid
-                      firebase
-                      .database()
-                      .ref('/users/' + user_id)
-                      .once('value')
-                      .then(snapshot => {
-                         console.log(snapshot.val())
-                         this.setState(prevState => ({
-                            ...prevState,
-                            first_name: snapshot.val().first_name,
-                            picture: {uri: snapshot.val().profile_picture}
-                         }));
-                      })
-                      
-       //var name = userData.first_name
-       //console.log("name:", name)
-       //setProfileData({'name': name, 'email': email, 'photoUrl': photoUrl})
-    } */
 
    render() {
       return (
@@ -64,9 +50,10 @@ class ProfileScreen extends Component {
                <Text>Profile</Text>
                {/* <Text>{GLOBAL.profileScreen.state.full_name}</Text>
                <Text>{GLOBAL.profileScreen.state.gmail}</Text> */}
-               <Text>{GLOBAL.profileScreen.state.full_name}</Text>
-               <Text>{GLOBAL.profileScreen.state.gmail}</Text>
-               <Image source={GLOBAL.profileScreen.state.profile_picture} style={{ height: 100, width: 100, resizeMode: 'stretch', margin: 5 }}></Image>
+               {/* <Image source={GLOBAL.profileScreen.state.profile_picture} style={{ height: 100, width: 100, resizeMode: 'stretch', margin: 5 }}></Image> */}
+               <Text>{this.state.fullName}</Text>
+               <Text>{this.state.email}</Text>
+               <Image source={{ uri: this.state.profilePicture }} style={{ height: 100, width: 100, resizeMode: 'stretch', margin: 5 }}></Image>
                <CustomButton
                   style={{
                      width: 200,
