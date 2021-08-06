@@ -12,17 +12,12 @@ class LoadingScreen extends Component {
       firebase.auth().onAuthStateChanged(
          function (user) {
             // Save current user data into global
-            console.log('AUTH STATE CHANGED CALLED ')
+            console.log('LoadingScreen: AUTH STATE CHANGED CALLED ')
             if (user) {
-               console.log('------------------------------------------------------------------------------------------------------------------------');
-               GLOBAL.profileScreen.setState({
-                  first_name: user.additionalUserInfo.profile.given_name,
-                  last_name: user.additionalUserInfo.profile.family_name,
-                  gmail: user.user.email,
-                  profile_picture: { uri: user.additionalUserInfo.profile.picture }
-               });
+               console.log('LoadingScreen: User connected --> switching to HomeScreen');
                this.props.navigation.navigate('AppDrawerNavigator');
             } else {
+               console.log('LoadingScreen: User not connected --> switching to LoginScreen');
                this.props.navigation.navigate('LoginScreen');
             }
          }.bind(this)

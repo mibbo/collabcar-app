@@ -8,6 +8,7 @@ import CustomButton from '../components/CustomButton';
 import colors from '../assets/colors';
 import { Ionicons } from '@expo/vector-icons'
 import GLOBAL from '../global.js'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class LoginScreen extends Component {
 
@@ -19,8 +20,9 @@ class LoginScreen extends Component {
          first_name: '',
          last_name: ''
       }
+      this.signInWithGoogleAsync = this.signInWithGoogleAsync.bind(this);
       GLOBAL.profileScreen = this;
-    }
+   }
 
    isUserEqual = (googleUser, firebaseUser) => {
       if (firebaseUser) {
@@ -37,7 +39,8 @@ class LoginScreen extends Component {
    }
 
    onSignIn = googleUser => {
-      console.log('Google Auth Response', googleUser);
+      console.log('LoginScreen: GOOGLE USER');
+      console.log('Google Auth Response', googleUser.user.name);
       // We need to register an Observer on Firebase Auth to make sure auth is initialized.
       var unsubscribe = firebase.auth().onAuthStateChanged((firebaseUser) => {
          unsubscribe();
@@ -60,6 +63,7 @@ class LoginScreen extends Component {
                            gmail: result.user.email,
                            profile_picture: result.additionalUserInfo.profile.picture,
                            locale: result.additionalUserInfo.profile.locale,
+                           // full_name: result.user.displayName,
                            first_name: result.additionalUserInfo.profile.given_name,
                            last_name: result.additionalUserInfo.profile.family_name,
                            created_at: Date.now()
@@ -72,11 +76,41 @@ class LoginScreen extends Component {
                         })
                   }
                   // Save current user data into global
+                  console.log('------------------------------------------------------------------------');
+                  console.log('LoginScreen: TAVAARAA GLOBAALII');
+                  console.log(result.user);
+                  console.log('------------------------------------------------------------------------');
+
+                  var userData = {
+                     fullName: result.user.displayName,
+                     email: result.user.email,
+                     profilePicture: {
+                        uri: result.user.photoURL
+                     }
+                  }
+                  const storeData = async (value) => {
+                     try {
+                        const jsonValue = JSON.stringify(value)
+                        await AsyncStorage.setItem('@userData', jsonValue)
+                     } catch (error) {
+                        console.log(error);
+                     }
+                     console.log(`Succesfully added ${userData.fullName}'s data in asyncStorage.`);
+                  }
+                  storeData(userData)
+
                   GLOBAL.profileScreen.setState({
-                     first_name: result.additionalUserInfo.profile.given_name,
-                     last_name: result.additionalUserInfo.profile.family_name,
+                     // first_name: result.additionalUserInfo.profile.given_name,
+                     // last_name: result.additionalUserInfo.profile.family_name,
+                     // gmail: result.user.email,
+                     // profile_picture: {
+                     //    uri: result.additionalUserInfo.profile.picture
+                     // }
+                     full_name: result.user.displayName,
                      gmail: result.user.email,
-                     profile_picture: {uri: result.additionalUserInfo.profile.picture}
+                     profile_picture: {
+                        uri: result.user.photoURL
+                     }
                   });
                })
                //---------------------------------------------------------

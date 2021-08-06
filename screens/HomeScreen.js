@@ -6,6 +6,8 @@ import colors from '../assets/colors'
 import MileageModal from '../components/MileageModal'
 import RefillModal from '../components/RefillModal'
 import GLOBAL from '../global.js'
+import LoginScreen from './LoginScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class HomeScreen extends Component {
 
@@ -13,6 +15,9 @@ class HomeScreen extends Component {
       super(props);
       this.state = {
          showMileage: false,
+         fullName: '',
+         email: '',
+         picture: {}
       };
    }
 
@@ -20,22 +25,56 @@ class HomeScreen extends Component {
       this.checkIfLoggedIn();
    }
 
-   checkIfLoggedIn = () => {
+   getData = async () => {
+      try {
+         const jsonValue = await AsyncStorage.getItem('@userData')
+         return jsonValue != null ? JSON.parse(jsonValue) : null;
+      } catch (error) {
+         console.log(error)
+      }
+      console.log('Done.')
+   }
+
+   // tätä pitää viä funtsii, että tarviiko tsekata aina homescreenissä. Mutta jos ei tsekata niin sitten pitää olla 100% varma, että kirjautumisen credentiaalit ei katoo mihinkään.
+   checkIfLoggedIn = async () => {
       firebase.auth().onAuthStateChanged(
-         function (user) {
+         async function (user) {
             // Save current user data into global
-            console.log('AUTH STATE CHANGED CALLED ')
+            console.log('HomeScreen: AUTH STATE CHANGED CALLED ')
+
+            // // user == currentUser
+            // const profile = firebase.auth().currentUser;
+
             if (user) {
-               console.log('------------------toimii------------------------------------------------');
-               GLOBAL.profileScreen.setState({
-                  first_name: user.additionalUserInfo.profile.given_name,
-                  last_name: user.additionalUserInfo.profile.family_name,
-                  gmail: user.user.email,
-                  profile_picture: { uri: user.additionalUserInfo.profile.picture }
-               });
-               this.props.navigation.navigate('AppDrawerNavigator');
+               console.log('HomeScreen: User connected');
+
+               console.log('------------------------------------------------------------------------');
+               console.log('HomeScreen: userData AsyncStoragesta HomeScreenin stateihin')
+               var storageUserData = await this.getData();
+               console.log(storageUserData);
+               this.setState({
+                  fullName: storageUserData.fullName,
+                  email: storageUserData.email,
+                  picture: storageUserData.profilePicture
+               })
+               console.log('------------------------------------------------------------------------');
+               console.log(this.state.fullName);
+               console.log(this.state.email);
+               console.log(this.state.picture);
+
+
+
+               // Eli tää ei toimi sen takia, koska se yrittää päivittää ProfileScreenin stateja, mutta koska appi on vasta käynnistetty ja ProfileScreen on UnMounted tilassa eli sen stateja ei voi päivittää
+               // elikkäselikkäs pitää miettiä joku muu ratkasu tälle globaalihommalle, tai ei ainakaan voida samallailla muitten komponenttien stateja muutella ihan millon halutaan
+               // elieli niinkun Pauli sanois: pelataan sitä omaa peliä ei kavereitten peliä
+               // GLOBAL.profileScreen.setState({
+               //    full_name: user.displayName,
+               //    gmail: user.email,
+               //    profile_picture: { uri: user.photoURL }
+               // });
             } else {
                this.props.navigation.navigate('LoginScreen');
+               console.log('HomeScreen: User not connected --> switching to LoginScreen');
             }
          }.bind(this)
       );
@@ -85,6 +124,17 @@ class HomeScreen extends Component {
                   <Text style={{ fontWeight: "100", fontFamily: "", color: "white" }}>Sign Out</Text>
                </CustomButton>
 
+               {/* <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                  <Text>Feed Screen</Text>
+                  <Button
+                     title="Open drawer"
+                     onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+                  />
+                  <Button
+                     title="Toggle drawer"
+                     onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+                  />
+               </View> */}
 
                {/* <CustomButton
                   style={{

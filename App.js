@@ -15,6 +15,11 @@ import * as firebase from 'firebase';
 import { firebaseConfig } from './config';
 import colors from './assets/colors';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
+import { LogBox } from 'react-native';
+
+// poistaa turhat keltaset warningit
+LogBox.ignoreLogs(['Setting a timer']);
+LogBox.ignoreLogs(['Deprecated: Native Google Sign-In has been mov']);
 
 class App extends React.Component {
   constructor() {
@@ -53,7 +58,7 @@ const HomeStackNavigator = createStackNavigator({
   HomeScreen: {
     screen: HomeScreen,
     navigationOptions: {
-      header: null,
+      headerShown: false,
     },
   },
   ProfileScreen: {

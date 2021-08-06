@@ -4,6 +4,7 @@ import firebase from 'firebase';
 import colors from '../assets/colors'
 import CustomButton from '../components/CustomButton'
 import GLOBAL from '../global.js'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -14,11 +15,21 @@ class ProfileScreen extends Component {
       this.state = {
          first_name: '',
          last_name: '',
+         fullName: '',
          email: '',
          picture: {}
       };
    }
 
+   getData = async () => {
+      try {
+         const jsonValue = await AsyncStorage.getItem('@userData')
+         return jsonValue != null ? JSON.parse(jsonValue) : null;
+      } catch (error) {
+         console.log(error)
+      }
+      console.log('Done.')
+   }
    //const [profile, setProfileData] = useState({})
 
    //componentDidMount = () => {
@@ -51,7 +62,9 @@ class ProfileScreen extends Component {
          <View style={{ flex: 1, backgroundColor: colors.bgMain }}>
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginVertical: 200, marginHorizontal: 40, backgroundColor: colors.bgSecondaryBackground }}>
                <Text>Profile</Text>
-               <Text>{GLOBAL.profileScreen.state.first_name + " " + GLOBAL.profileScreen.state.last_name}</Text>
+               {/* <Text>{GLOBAL.profileScreen.state.full_name}</Text>
+               <Text>{GLOBAL.profileScreen.state.gmail}</Text> */}
+               <Text>{GLOBAL.profileScreen.state.full_name}</Text>
                <Text>{GLOBAL.profileScreen.state.gmail}</Text>
                <Image source={GLOBAL.profileScreen.state.profile_picture} style={{ height: 100, width: 100, resizeMode: 'stretch', margin: 5 }}></Image>
                <CustomButton
