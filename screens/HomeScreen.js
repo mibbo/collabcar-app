@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Button, TextInput, Keyboard, ScrollView} from 'react-native';
+import { View, Text, StyleSheet, Button, TextInput, Keyboard, ScrollView } from 'react-native';
 import firebase from 'firebase';
 import CustomButton from '../components/CustomButton'
 import colors from '../assets/colors'
-import Mileage from '../components/Mileage'
-import Refill from '../components/Refill'
+import MileageModal from '../components/MileageModal'
+import RefillModal from '../components/RefillModal'
 import GLOBAL from '../global.js'
 
 class HomeScreen extends Component {
@@ -14,13 +14,11 @@ class HomeScreen extends Component {
       this.state = {
          showMileage: false,
       };
-    }
+   }
 
    toggleManualMileage = () => {
       this.setState({ showMileage: !this.state.showMileage });
    }
-   
-
 
    render() {
       return (
@@ -35,19 +33,18 @@ class HomeScreen extends Component {
             >
 
                {/* Balance */}
-               
+
                <Text>HomeScreen</Text>
                <View>
-                  <Text style={{color: 'white', marginBottom: 20}}>Balance: </Text>
+                  <Text style={{ color: 'white', marginBottom: 20 }}>Balance: </Text>
                </View>
 
                {/* Mileage */}
-               <Mileage></Mileage>
+               <MileageModal></MileageModal>
 
 
                {/* Refill */}
-               <Refill></Refill>
-
+               <RefillModal></RefillModal>
 
                <CustomButton
                   style={{
@@ -55,27 +52,31 @@ class HomeScreen extends Component {
                      backgroundColor: colors.bgFailure,
                      borderWidth: 0.5,
                      borderColor: colors.bgFailure,
-                     marginBottom: 10,
+                     margin: 5,
                   }}
                   title="Login in"
                   onPress={() => firebase.auth().signOut()}
                >
                   <Text style={{ fontWeight: "100", fontFamily: "", color: "white" }}>Sign Out</Text>
                </CustomButton>
-               <CustomButton
+
+
+               {/* <CustomButton
                   style={{
                      width: 200,
                      backgroundColor: colors.bgPrimary,
                      borderWidth: 0.5,
                      borderColor: colors.bgError,
+                     margin: 5,
                   }}
                   title="Profile"
                   onPress={() => this.props.navigation.navigate("ProfileScreen")}
                >
                   <Text style={{ fontWeight: "100", fontFamily: "", color: "white" }}>Profile</Text>
-               </CustomButton>
+               </CustomButton> */}
 
-               <CustomButton
+
+               {/* <CustomButton
                   position='top-left'
                   style={{
                      width: 20,
@@ -87,7 +88,7 @@ class HomeScreen extends Component {
                   onPress={() => this.props.navigation.navigate("LoginScreen")}
                >
                   <Text style={{ fontWeight: "100", color: "white" }}>!</Text>
-               </CustomButton>
+               </CustomButton> */}
             </View>
             <Text>HomeScreen</Text>
 
