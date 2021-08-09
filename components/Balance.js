@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, Button, TextInput, Keyboard, ScrollView} from 'react-native';
 import firebase from 'firebase';
 import {theme, fonts, padding, dimensions} from '../styles.js'
+import {getFirebaseData, getStorageData} from '../functions.js'
 
 export class Balance extends Component {
 
@@ -10,10 +11,44 @@ export class Balance extends Component {
         this.state = {
             balance: 0
         };
-      }
+    }
 
-    componentDidUpdate = () => {
-        
+
+
+    componentDidMount = async () => {
+        // Get balance from AsyncStorage
+        console.log('Balance: Setting states');
+
+        // 3. Toimii. Päivittyy joka
+        firebase
+            .database()
+            .ref('/users/' + firebase.auth().currentUser.uid)
+            .on('value', (snapshot) => {
+                console.log("NYT MUUTTUU!", snapshot.val())
+                this.setState({
+                    balance: snapshot.val().balance
+                })
+            })
+    
+
+
+
+        // 2. Toimii 
+        //const balance = await getFirebaseData()
+        //
+        //this.setState({
+        //    balance: balance.balance
+        //})
+
+
+        // 1: Toimii
+        /*getFirebaseData()
+            .then((data) => {
+                this.setState({
+                    balance: data.balance
+                })
+            })
+            .done() */
     }
 
     render() {
@@ -36,7 +71,7 @@ export class Balance extends Component {
                                 marginRight: 20
                             }
                         ]}
-                    >{this.state.balance}
+                    >{this.state.balance} liters
                     </Text>
                 </View>
 
