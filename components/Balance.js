@@ -18,8 +18,8 @@ export class Balance extends Component {
 
     render() {
         return (
-            <View>
-                <Text style={{ fontSize: 20, fontWeight: "100", fontFamily: "", color: "white" }}>Balance</Text>
+            <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                <Text style={{ fontSize: 20, fontWeight: "600", fontFamily: "", color: theme.colors.mainBlue, borderWidth: 2, width: 300, marginTop: 20}}>Balance</Text>
                     <View style={{flexDirection: 'row'}}>
                         <Text style={{ fontSize: 20, fontFamily: "", color: "white" }}></Text>
                     </View>
