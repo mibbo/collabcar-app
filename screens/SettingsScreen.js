@@ -2,8 +2,6 @@ import React, { Component, useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, Button } from 'react-native';
 import colors from '../assets/colors'
 import CustomButton from '../components/CustomButton'
-import GLOBAL from '../global.js'
-
 
 
 class SettingsScreen extends Component {

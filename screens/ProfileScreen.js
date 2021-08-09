@@ -3,8 +3,7 @@ import { View, Text, Image, StyleSheet, Button } from 'react-native';
 import firebase from 'firebase';
 import colors from '../assets/colors'
 import CustomButton from '../components/CustomButton'
-import GLOBAL from '../global.js'
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 class ProfileScreen extends Component {
@@ -12,66 +11,41 @@ class ProfileScreen extends Component {
    constructor(props) {
       super(props);
       this.state = {
-         first_name: '',
-         last_name: '',
+         fullName: '',
          email: '',
-         picture: {}
+         // TODO: tutki tätä -> tää tarvii jonkun ei tyhjän stringin, muuten ulisee jotai
+         profilePicture: 'https://lh3.googleusercontent.com/-CSnB1vmetB4/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucmiGwUT4UDeEpmDnrSYsSaa5FrjKQ/s96-c/photo.jpg'
       };
    }
 
-   componentDidMount() {
-      this.checkIfLoggedIn();
+   async componentDidMount() {
+      console.log('ProfileScreen: Setting states');
+      var storageUserData = await this.getData();
+      this.setState({
+         fullName: storageUserData.fullName,
+         email: storageUserData.email,
+         profilePicture: storageUserData.profilePicture
+      })
    }
-   // componentWillMount() {
-   //    this.checkIfLoggedIn();
-   // }
 
-   checkIfLoggedIn = () => {
-      firebase.auth().onAuthStateChanged(
-         function (user) {
-            console.log('AUTH STATE CHANGED CALLED ')
-            if (!user) {
-               this.props.navigation.navigate('LoginScreen');
-            }
-         }.bind(this)
-      );
-   };
-
-   //const [profile, setProfileData] = useState({})
-
-   //componentDidMount = () => {
-   //this.getCurrentUser()
-   //console.log(GLOBAL.profileScreen)
-   //} 
-
-   /* getCurrentUser = () => {
-       var user_id = firebase.auth().currentUser.uid
-                      firebase
-                      .database()
-                      .ref('/users/' + user_id)
-                      .once('value')
-                      .then(snapshot => {
-                         console.log(snapshot.val())
-                         this.setState(prevState => ({
-                            ...prevState,
-                            first_name: snapshot.val().first_name,
-                            picture: {uri: snapshot.val().profile_picture}
-                         }));
-                      })
-                      
-       //var name = userData.first_name
-       //console.log("name:", name)
-       //setProfileData({'name': name, 'email': email, 'photoUrl': photoUrl})
-    } */
+   getData = async () => {
+      try {
+         const jsonValue = await AsyncStorage.getItem('@userData')
+         return jsonValue != null ? JSON.parse(jsonValue) : null;
+      } catch (error) {
+         console.log(error)
+      }
+      console.log('Done.')
+   }
 
    render() {
       return (
          <View style={{ flex: 1, backgroundColor: colors.bgMain }}>
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginVertical: 200, marginHorizontal: 40, backgroundColor: colors.bgSecondaryBackground }}>
                <Text>Profile</Text>
-               <Text>{GLOBAL.profileScreen.state.first_name + " " + GLOBAL.profileScreen.state.last_name}</Text>
-               <Text>{GLOBAL.profileScreen.state.gmail}</Text>
-               <Image source={GLOBAL.profileScreen.state.profile_picture} style={{ height: 100, width: 100, resizeMode: 'stretch', margin: 5 }}></Image>
+               <Text>{this.state.fullName}</Text>
+               <Text>{this.state.email}</Text>
+               <Image source={{ uri: this.state.profilePicture }} style={{ height: 100, width: 100, resizeMode: 'stretch', margin: 5 }}></Image>
                <CustomButton
                   style={{
                      width: 200,
