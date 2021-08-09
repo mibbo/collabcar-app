@@ -20,50 +20,50 @@ class HomeScreen extends Component {
       };
    }
 
-   componentDidMount() {
-      this.checkIfLoggedIn();
-   }
+   // componentDidMount() {
+   //    this.checkIfLoggedIn();
+   // }
 
-   getData = async () => {
-      try {
-         const jsonValue = await AsyncStorage.getItem('@userData')
-         return jsonValue != null ? JSON.parse(jsonValue) : null;
-      } catch (error) {
-         console.log(error)
-      }
-      console.log('Done.')
-   }
+   // getData = async () => {
+   //    try {
+   //       const jsonValue = await AsyncStorage.getItem('@userData')
+   //       return jsonValue != null ? JSON.parse(jsonValue) : null;
+   //    } catch (error) {
+   //       console.log(error)
+   //    }
+   //    console.log('Done.')
+   // }
 
-   // tätä pitää viä funtsii, että tarviiko tsekata aina homescreenissä. Mutta jos ei tsekata niin sitten pitää olla 100% varma, että kirjautumisen credentiaalit ei katoo mihinkään.
-   checkIfLoggedIn = async () => {
-      firebase.auth().onAuthStateChanged(
-         async function (user) {
-            console.log('HomeScreen: AUTH STATE CHANGED CALLED ')
-            if (user) {
-               console.log('HomeScreen: User connected');
-               console.log('HomeScreen: userData AsyncStoragesta HomeScreenin stateihin')
-               var storageUserData = await this.getData();
-               console.log(storageUserData);
-               this.setState({
-                  fullName: storageUserData.fullName,
-                  email: storageUserData.email,
-                  picture: storageUserData.profilePicture
-               })
-               // Eli tää ei toimi sen takia, koska se yrittää päivittää ProfileScreenin stateja, mutta koska appi on vasta käynnistetty ja ProfileScreen on UnMounted tilassa eli sen stateja ei voi päivittää
-               // elikkäselikkäs pitää miettiä joku muu ratkasu tälle globaalihommalle, tai ei ainakaan voida samallailla muitten komponenttien stateja muutella ihan millon halutaan
-               // elieli niinkun Pauli sanois: pelataan sitä omaa peliä ei kavereitten peliä
-               // GLOBAL.profileScreen.setState({
-               //    full_name: user.displayName,
-               //    gmail: user.email,
-               //    profile_picture: { uri: user.photoURL }
-               // });
-            } else {
-               console.log('HomeScreen: User not connected --> switching to LoginScreen');
-               this.props.navigation.navigate('LoginScreen');
-            }
-         }.bind(this)
-      );
-   };
+   // // tätä pitää viä funtsii, että tarviiko tsekata aina homescreenissä. Mutta jos ei tsekata niin sitten pitää olla 100% varma, että kirjautumisen credentiaalit ei katoo mihinkään.
+   // checkIfLoggedIn = async () => {
+   //    firebase.auth().onAuthStateChanged(
+   //       async function (user) {
+   //          console.log('HomeScreen: AUTH STATE CHANGED CALLED ')
+   //          if (user) {
+   //             console.log('HomeScreen: User connected');
+   //             console.log('HomeScreen: userData AsyncStoragesta HomeScreenin stateihin')
+   //             var storageUserData = await this.getData();
+   //             console.log(storageUserData);
+   //             this.setState({
+   //                fullName: storageUserData.fullName,
+   //                email: storageUserData.email,
+   //                picture: storageUserData.profilePicture
+   //             })
+   //             // Eli tää ei toimi sen takia, koska se yrittää päivittää ProfileScreenin stateja, mutta koska appi on vasta käynnistetty ja ProfileScreen on UnMounted tilassa eli sen stateja ei voi päivittää
+   //             // elikkäselikkäs pitää miettiä joku muu ratkasu tälle globaalihommalle, tai ei ainakaan voida samallailla muitten komponenttien stateja muutella ihan millon halutaan
+   //             // elieli niinkun Pauli sanois: pelataan sitä omaa peliä ei kavereitten peliä
+   //             // GLOBAL.profileScreen.setState({
+   //             //    full_name: user.displayName,
+   //             //    gmail: user.email,
+   //             //    profile_picture: { uri: user.photoURL }
+   //             // });
+   //          } else {
+   //             console.log('HomeScreen: User not connected --> switching to LoginScreen');
+   //             this.props.navigation.navigate('LoginScreen');
+   //          }
+   //       }.bind(this)
+   //    );
+   // };
 
    toggleManualMileage = () => {
       this.setState({ showMileage: !this.state.showMileage });
