@@ -33,7 +33,13 @@ class HomeScreen extends Component {
                }}
             >
                
-               <View style={{backgroundColor: 'white', borderRadius: 12, width: 350, height: 100}}>
+               <View style={{
+                  backgroundColor: 'white',
+                  borderRadius: 12,
+                  width: 350,
+                  height:100,
+                  marginBottom: 20
+                  }}>
                   {/* Balance */}
                   <Balance></Balance>
                </View>
