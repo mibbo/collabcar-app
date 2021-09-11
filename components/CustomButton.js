@@ -17,10 +17,10 @@ function getPosition(position) {
    }
 }
 
-const CustomButton = ({ children, onPress, style, position }) => {
+const CustomButton = ({ children, onPress, style, position, disabled }) => {
    const floatingActionButton = position ? getPosition(position) : [];
    return (
-      <TouchableOpacity style={floatingActionButton} onPress={onPress}>
+      <TouchableOpacity style={floatingActionButton} onPress={onPress} disabled={disabled}>
          <View style={[styles.button, style]}>{children}</View>
       </TouchableOpacity>
    );

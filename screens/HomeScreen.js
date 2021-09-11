@@ -5,6 +5,7 @@ import CustomButton from '../components/CustomButton'
 import colors from '../assets/colors'
 import MileageModal from '../components/MileageModal'
 import RefillModal from '../components/RefillModal'
+import Balance from '../components/Balance';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class HomeScreen extends Component {
@@ -79,13 +80,18 @@ class HomeScreen extends Component {
                   justifyContent: "center",
                }}
             >
-
-               {/* Balance */}
-
-               <Text>HomeScreen</Text>
-               <View>
-                  <Text style={{ color: 'white', marginBottom: 20 }}>Balance: </Text>
+               
+               <View style={{
+                  backgroundColor: 'white',
+                  borderRadius: 12,
+                  width: 350,
+                  height:100,
+                  marginBottom: 20
+                  }}>
+                  {/* Balance */}
+                  <Balance></Balance>
                </View>
+
 
                {/* Mileage */}
                <MileageModal></MileageModal>
