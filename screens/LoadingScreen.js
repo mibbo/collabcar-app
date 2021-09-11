@@ -15,7 +15,6 @@ class LoadingScreen extends Component {
                console.log('LoadingScreen: User connected --> switching to HomeScreen');
                this.props.navigation.navigate('AppDrawerNavigator');
                console.log('logaako tämän?');
-
             } else {
                console.log('LoadingScreen: User not connected --> switching to LoginScreen');
                this.props.navigation.navigate('LoginScreen');

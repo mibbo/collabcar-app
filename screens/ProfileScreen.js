@@ -18,9 +18,19 @@ class ProfileScreen extends Component {
       };
    }
 
+   useAsync(asyncFn, onSuccess) {
+      useEffect(() => {
+         let isActive = true;
+         getData().then(data => {
+            if (isActive) onSuccess(data);
+         });
+         return () => { isActive = false };
+      }, [asyncFn, onSuccess]);
+   }
+
    async componentDidMount() {
       console.log('ProfileScreen: Setting states');
-      var storageUserData = await this.getData();
+      var storageUserData = this.useAsync();
       this.setState({
          fullName: storageUserData.fullName,
          email: storageUserData.email,

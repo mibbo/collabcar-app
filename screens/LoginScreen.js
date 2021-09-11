@@ -30,6 +30,16 @@ class LoginScreen extends Component {
       return false;
    }
 
+   storeData = async (value) => {
+      try {
+         const jsonValue = JSON.stringify(value)
+         await AsyncStorage.setItem('@userData', jsonValue)
+      } catch (error) {
+         console.log(error);
+      }
+      console.log(`Succesfully added ${userData.fullName}'s data in asyncStorage.`);
+   }
+
    onSignIn = googleUser => {
       console.log('LoginScreen: GOOGLE USER');
       console.log('Google Auth Response', googleUser.user.name);
@@ -72,15 +82,7 @@ class LoginScreen extends Component {
                      email: result.user.email,
                      profilePicture: result.user.photoURL
                   }
-                  const storeData = async (value) => {
-                     try {
-                        const jsonValue = JSON.stringify(value)
-                        await AsyncStorage.setItem('@userData', jsonValue)
-                     } catch (error) {
-                        console.log(error);
-                     }
-                     console.log(`Succesfully added ${userData.fullName}'s data in asyncStorage.`);
-                  }
+
                   storeData(userData)
                })
                //---------------------------------------------------------
