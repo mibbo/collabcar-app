@@ -23,6 +23,11 @@
  // The Firebase Admin SDK to access the Firebase Realtime Database.
  const admin = require('firebase-admin');
  admin.initializeApp();
+
+ // CORS Express middleware to enable CORS Requests.
+const cors = require('cors')({
+  origin: true,
+});
  // [END import]
  
  // [START addMessage]
@@ -121,3 +126,36 @@
         admin.database().ref('/users/' + userID + '/totalRefilled').set(Math.round((totalRefill + refillAmount + Number.EPSILON) * 100) / 100);
        })
      });
+
+  exports.history = functions.https.onRequest((req, res) => {
+    if (req.method === 'GET') {
+      cors(req, res, () => {
+        // [END usingMiddleware]
+        // Reading date format from URL query parameter.
+        // [START readQueryParam]
+        let format = req.body;
+        // [END readQueryParam]
+        // Reading date format from request body query parameter
+        if (!format) {
+          // [START readBodyParam]
+          format = req.body.format;
+          // [END readBodyParam]
+        }
+        // [START sendResponse]
+        const formattedDate = moment().format(`${format}`);
+        functions.logger.log('Sending Formatted date:', formattedDate);
+        res.status(200).send(formattedDate);
+        // [END sendResponse]
+      });
+      // Grab the current value of what was written to the Realtime Database.
+      const userID = data.uid
+      const historyPromise = admin.database().ref('/users/' + userID + '/history').once('value');
+    }
+    else 
+    {
+      res.status(403).send('Forbidden!');
+      return;
+    }
+  
+
+    });
