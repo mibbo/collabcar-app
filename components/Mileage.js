@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Button, TextInput, Keyboard, ScrollView} from 'react-native';
+import { View, Text, StyleSheet, Button, TextInput, Keyboard, ScrollView, TouchableWithoutFeedback} from 'react-native';
 import firebase from 'firebase';
 import CustomButton from '../components/CustomButton'
-import GLOBAL from '../global.js'
 import Modal from 'react-native-modal';
 import {theme, fonts, padding, dimensions} from '../styles.js'
 
@@ -11,21 +10,24 @@ class Mileage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-           mileage: 0,
+           mileage: null,
            avgConsumption: 0,
            tripConsumption: 0,
-           isVisible: false
+           isVisible: false,
+           isCalculated: false
         };
       }
       
     toggleMileageModal = () => {
+        this.emptyInputs()
         this.setState({isVisible: !this.state.isVisible})
     }
 
     calcTripConsumption = () => {
         let trip_consumption = parseFloat((this.state.mileage * (this.state.avgConsumption / 100)).toFixed(2))
         //console.log(parseFloat(trip_consumption.toFixed(2)))
-        this.setState({tripConsumption: trip_consumption})
+        this.setState({tripConsumption: trip_consumption, isCalculated: true})
+
         console.log(typeof(this.state.tripConsumption))
     }
 
@@ -52,17 +54,36 @@ class Mileage extends Component {
      }
   
      handleMileageChange = (mileage) => {
+        if (mileage === '') {
+            this.setState({
+                avgConsumption: '',
+                tripConsumption: 0,
+                isCalculated: false
+            })
+        }
         this.setState({mileage: mileage})
+
         //this.calcTripConsumption()
      }
   
      handleConsumptionChange = (avgConsumption) => {
+        if (avgConsumption === '') {
+            this.setState({
+                tripConsumption: 0,
+                isCalculated: false
+            })
+        }
         this.setState({avgConsumption: avgConsumption})
         //this.calcTripConsumption()
      }
   
      emptyInputs = () => {
-        this.setState({avgConsumption: '', mileage: ''})
+        this.setState({
+            avgConsumption: '',
+            mileage: '',
+            tripConsumption: 0,
+            isCalculated: false
+        })
      }
   
      handleSubmit = () => {
@@ -89,30 +110,34 @@ class Mileage extends Component {
                 isVisible={this.state.isVisible}
                 onBackdropPress={this.toggleMileageModal}
                 hideModalContentWhileAnimating={false}>
-
+                
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.container}>
                     <View style={{width: 250}}>
                         <Text style={styles.title}>Mileage</Text>
                         <TextInput
-                            style={{backgroundColor: '#454F63', color: 'gray', height: 50, paddingLeft: 10, fontSize: theme.textVariants.body.fontSize, marginBottom: 10, marginTop: 10, borderRadius: 8}}
+                            style={styles.input}
                             placeholder="Enter mileage"
                             placeholderTextColor="gray"
                             keyboardType="numeric"
                             value={this.state.mileage}
                             onChangeText={this.handleMileageChange}
-                            onEndEditing={this.calcTripConsumption}
+                            onSubmitEditing={() => { this.secondTextInput.focus(); }}
+                            blurOnSubmit={false}
                             >
                         </TextInput>
 
                         <Text style={styles.title}>Consumption</Text>
                         <TextInput
-                            style={{backgroundColor: '#454F63', color: 'gray', height: 50, paddingLeft: 10, fontSize: theme.textVariants.body.fontSize, marginBottom: 10, marginTop: 10, borderRadius: 8}}
+                            style={!this.state.mileage ? {...styles.input, ...styles.disabled} : styles.input}
                             placeholder="Enter consumption"
                             placeholderTextColor="gray"
                             keyboardType="numeric"
                             value={this.state.avgConsumption}
+                            editable={!this.state.mileage ? false : true}
+                            ref={(input) => { this.secondTextInput = input; }}
+                            onBlur={this.calcTripConsumption}
                             onChangeText={this.handleConsumptionChange}
-                            onEndEditing={this.calcTripConsumption}
                         >
                         </TextInput>
                     </View>
@@ -134,9 +159,10 @@ class Mileage extends Component {
                         </CustomButton>
 
                         <CustomButton   
-                        style={styles.submitButton}
+                        style={!this.state.isCalculated ? {...styles.submitButton, ...styles.disabled} : styles.submitButton}
                         title="Submit"
                         onPress={this.handleSubmit}
+                        disabled={!this.state.isCalculated ? true : false}
                         >
                         <Text style={{ fontWeight: "100", fontFamily: "", color: "white" }}>Submit</Text>
                         </CustomButton>
@@ -151,6 +177,7 @@ class Mileage extends Component {
                     )}
 
                 </View>
+                </TouchableWithoutFeedback>
             </Modal>
             
             <CustomButton
@@ -180,6 +207,9 @@ const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor:theme.colors.primary
     },
+    disabled: {
+        opacity: 0.3
+    },
     submitButton: {
         borderRadius: 12,
         backgroundColor: theme.colors.accept,
@@ -199,6 +229,16 @@ const styles = StyleSheet.create({
         width: 124,
         height: 45,
         marginRight: 10
+    },
+    input: {
+        backgroundColor: '#454F63',
+        color: 'white',
+        height: 50,
+        paddingLeft: 10,
+        fontSize: theme.textVariants.body.fontSize,
+        marginBottom: 10,
+        marginTop: 10,
+        borderRadius: 8
     },
     openModalButton: {
         borderRadius: 12,
