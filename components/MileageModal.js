@@ -14,6 +14,8 @@ class Mileage extends Component {
            mileage: null,
            avgConsumption: 0,
            tripConsumption: 0,
+           successMessage: '',
+           valueError:'',
            isVisible: false,
            isCalculated: false
         };
@@ -21,7 +23,15 @@ class Mileage extends Component {
       
     toggleMileageModal = () => {
         this.emptyInputs()
-        this.setState({isVisible: !this.state.isVisible})
+        this.setState({
+            isVisible: !this.state.isVisible,
+            successMessage: '',
+            valueError: ''
+        })
+    }
+
+    verifyInputs = () => {
+
     }
 
     calcTripConsumption = () => {
@@ -94,7 +104,7 @@ class Mileage extends Component {
          } else {
            this.setState(() => ({ valueError: null }));
            this.sendMileage();
-           this.emptyInputs();
+           this.toggleMileageModal();
          }
      }
 
