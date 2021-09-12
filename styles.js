@@ -13,9 +13,15 @@ const palette = {
     red: '#CD0E61',
     black: '#0B0B0B',
     white: '#F0F2F3',
-    darkBlue: '#2A2E43',
+    sand: '#F5F5F5',
+    clay: '#2A2E43',
+    darkGray: '#454F63',
+    lightGray: '#959DAD',
     cyan: '#3ACCE1',
-    gray: '#2D5D7B'
+    deepBlue: '#2D5D7B',
+    darkBlue: '#052253'
+    
+
   }
 
 export const padding = {
@@ -36,16 +42,17 @@ export const fonts = {
 export const theme = {
     colors: {
       background: palette.white,
-      modalBackground: palette.darkBlue,
+      modalBackground: palette.clay,
       foreground: palette.black,
-      primary: palette.darkBlue,
-      secondary: palette.gray,
+      primary: palette.clay,
+      secondary: palette.deepBlue,
       success: palette.green,
       danger: palette.red,
       failure: palette.red,
       accept: palette.cyan,
-      cancel: palette.gray,
-      mainBlue: '#052253'
+      cancel: palette.deepBlue,
+      mainBlue: palette.darkBlue,
+      spacer: palette.sand
     },
     spacing: {
         none: 0,
