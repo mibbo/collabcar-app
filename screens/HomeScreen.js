@@ -101,7 +101,7 @@ class HomeScreen extends Component {
                {/* Refill */}
                <RefillModal></RefillModal>
 
-               <CustomButton
+               {/* <CustomButton
                   style={{
                      width: 200,
                      backgroundColor: colors.bgFailure,
@@ -113,7 +113,7 @@ class HomeScreen extends Component {
                   onPress={() => firebase.auth().signOut()}
                >
                   <Text style={{ fontWeight: "100", fontFamily: "", color: "white" }}>Sign Out</Text>
-               </CustomButton>
+               </CustomButton> */}
 
                {/* <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                   <Text>Feed Screen</Text>

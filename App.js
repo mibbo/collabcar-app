@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import { createDrawerNavigator } from 'react-navigation-drawer';
+import { createDrawerNavigator, DrawerItems, DrawerActions } from 'react-navigation-drawer';
+import SafeAreaView from 'react-native-safe-area-view';
 
 import LoginScreen from './screens/LoginScreen';
 import LoadingScreen from './screens/LoadingScreen';
@@ -10,6 +11,7 @@ import HomeScreen from './screens/HomeScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import CustomDrawerComponent from './components/CustomDrawerComponent';
+import DummyScreen from './screens/DummyScreen';
 
 import * as firebase from 'firebase';
 import { firebaseConfig } from './config';
@@ -105,6 +107,13 @@ const AppDrawerNavigator = createDrawerNavigator(
       navigationOptions: {
         title: 'Settings',
         drawerIcon: () => <Ionicons name="ios-settings" size={24} />
+      }
+    },
+    Logout: {
+      screen: DummyScreen,
+      navigationOptions: {
+        title: 'Logout',
+        drawerIcon: () => <Ionicons name="ear-sharp" size={24} color="red" />
       }
     }
   },

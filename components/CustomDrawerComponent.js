@@ -1,16 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component, TouchableOpacity} from 'react';
 import {
     View,
     Text,
     StyleSheet,
     ScrollView,
     SafeAreaView,
-    Platform
+    Platform,
+    Button
 } from 'react-native';
 
-import { DrawerItems } from 'react-navigation-drawer';
+import { DrawerItems, DrawerNavigatorItems } from 'react-navigation-drawer';
 import colors from '../assets/colors';
 import { Ionicons } from '@expo/vector-icons';
+import CustomButton from '../components/CustomButton'
+import firebase from 'firebase';
 
 class CustomDrawerNavigator extends Component {
     render() {
@@ -29,10 +32,11 @@ class CustomDrawerNavigator extends Component {
                     <Ionicons name="ios-car" size={100} color={colors.logoColor} />
                     <Text style={{ fontSize: 24, color: 'white', fontWeight: '100', marginBottom: 20 }}>
                         CollabCar
-          </Text>
+                    </Text>
                 </View>
-                <DrawerItems {...this.props} />
+                <DrawerNavigatorItems {...this.props} />
             </ScrollView>
+            
         );
     }
 }
