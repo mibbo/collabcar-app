@@ -44,7 +44,8 @@ export const theme = {
       danger: palette.red,
       failure: palette.red,
       accept: palette.cyan,
-      cancel: palette.gray
+      cancel: palette.gray,
+      mainBlue: '#052253'
     },
     spacing: {
         none: 0,
