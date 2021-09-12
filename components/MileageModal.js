@@ -4,6 +4,7 @@ import firebase from 'firebase';
 import CustomButton from '../components/CustomButton'
 import Modal from 'react-native-modal';
 import {theme, fonts, padding, dimensions} from '../styles.js'
+import CustomInput from '../components/CustomInput';
 
 class Mileage extends Component {
 
@@ -28,7 +29,7 @@ class Mileage extends Component {
         //console.log(parseFloat(trip_consumption.toFixed(2)))
         this.setState({tripConsumption: trip_consumption, isCalculated: true})
 
-        console.log(typeof(this.state.tripConsumption))
+        //console.log(typeof(this.state.tripConsumption))
     }
 
     sendMileage = () => {
@@ -115,6 +116,23 @@ class Mileage extends Component {
                 <View style={styles.container}>
                     <View style={{width: 250}}>
                         <Text style={styles.title}>Mileage</Text>
+                        <CustomInput
+                            style={styles.input}
+                            placeholder="Enter mileage"
+                            placeholderTextColor="gray"
+                            keyboardType="numeric"
+                            value={this.state.mileage}
+                            maxLength={5}
+                            onChangeText={this.handleMileageChange}
+                            onSubmitEditing={() => {
+                                if (this.state.mileage !== '')
+                                    this.consumptionInput.focus();
+                            }}
+                            blurOnSubmit={false}
+                            >
+                        </CustomInput>
+
+                        {/*Trip consumption
                         <TextInput
                             style={styles.input}
                             placeholder="Enter mileage"
@@ -129,8 +147,24 @@ class Mileage extends Component {
                             blurOnSubmit={false}
                             >
                         </TextInput>
+                        */}
 
                         <Text style={styles.title}>Consumption</Text>
+                        
+                        <CustomInput
+                            style={!this.state.mileage && {...styles.disabled}}
+                            placeholder="Enter consumption"
+                            placeholderTextColor="gray"
+                            keyboardType="numeric"
+                            value={this.state.avgConsumption}
+                            maxLength={5}
+                            editable={!this.state.mileage ? false : true}
+                            inputRef={ref => this.consumptionInput = ref}
+                            onBlur={this.calcTripConsumption}
+                            onChangeText={this.handleConsumptionChange}
+                        >    
+                        </CustomInput>
+                        {/*
                         <TextInput
                             style={!this.state.mileage ? {...styles.input, ...styles.disabled} : styles.input}
                             placeholder="Enter consumption"
@@ -143,6 +177,7 @@ class Mileage extends Component {
                             onChangeText={this.handleConsumptionChange}
                         >
                         </TextInput>
+                        */}
                     </View>
 
                     {/*Trip consumption*/}

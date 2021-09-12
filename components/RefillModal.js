@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Button, TextInput, Keyboard, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Button, TextInput, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import firebase from 'firebase';
 import CustomButton from './CustomButton'
+import CustomInput from '../components/CustomInput';
 import Modal from 'react-native-modal';
 import { theme, fonts, padding, dimensions } from '../styles.js'
 
@@ -10,8 +11,9 @@ class RefillModal extends Component {
    constructor(props) {
       super(props);
       this.state = {
-         refill: '',
-         isVisible: false
+         refill: 0,
+         isVisible: false,
+         isEntered: false
       };
    }
 
@@ -40,11 +42,19 @@ class RefillModal extends Component {
    }
 
    handleRefillChange = (refill) => {
-      this.setState({ refill: refill })
+      if (refill === '') {
+         this.setState({
+             refill: 0,
+             isEntered: false
+         })
+     } else {
+      this.setState({ refill: refill, isEntered: true })
+     }
+
    }
 
    emptyInputs = () => {
-      this.setState({ refill: '' })
+      this.setState({ refill: 0, isEntered: false })
    }
 
    handleSubmit = () => {
@@ -71,19 +81,21 @@ class RefillModal extends Component {
                isVisible={this.state.isVisible}
                onBackdropPress={this.toggleRefillModal}
                hideModalContentWhileAnimating={false}>
-
+               
+               <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                <View style={styles.container}>
                   <View style={{ width: 250 }}>
                      <Text style={styles.title}>Refill amount</Text>
-                     <TextInput
-                        style={{ backgroundColor: '#454F63', color: 'gray', height: 50, paddingLeft: 10, fontSize: theme.textVariants.body.fontSize, marginBottom: 10, marginTop: 10, borderRadius: 8 }}
+                     <CustomInput
+                        style={styles.input}
                         placeholder="Enter amount"
                         placeholderTextColor="gray"
                         keyboardType="numeric"
                         value={this.state.mileage}
                         onChangeText={this.handleRefillChange}
+                        maxLength={4}
                      >
-                     </TextInput>
+                     </CustomInput>
                   </View>
 
                   <View style={{ flexDirection: 'row', marginTop: 50 }}>
@@ -96,9 +108,10 @@ class RefillModal extends Component {
                      </CustomButton>
 
                      <CustomButton
-                        style={styles.submitButton}
+                        style={!this.state.isEntered ? {...styles.submitButton, ...styles.disabled} : styles.submitButton}
                         title="Submit"
                         onPress={this.handleSubmit}
+                        disabled={!this.state.isEntered ? true : false}
                      >
                         <Text style={{ fontWeight: "100", fontFamily: "", color: "white" }}>Submit</Text>
                      </CustomButton>
@@ -113,6 +126,7 @@ class RefillModal extends Component {
                   )}
 
                </View>
+               </TouchableWithoutFeedback>
             </Modal>
 
             <CustomButton
@@ -134,6 +148,16 @@ const styles = StyleSheet.create({
       margin: 20,
       opacity: 0.95,
    },
+   input: {
+      backgroundColor: '#454F63',
+      color: 'white',
+      height: 50,
+      paddingLeft: 10,
+      fontSize: theme.textVariants.body.fontSize,
+      marginBottom: 10,
+      marginTop: 10,
+      borderRadius: 8 
+   },
    container: {
       borderRadius: 15,
       height: 400,
@@ -141,6 +165,9 @@ const styles = StyleSheet.create({
       alignItems: "center",
       backgroundColor: theme.colors.primary
    },
+   disabled: {
+      opacity: 0.3
+  },
    submitButton: {
       borderRadius: 12,
       backgroundColor: theme.colors.accept,
