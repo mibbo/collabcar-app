@@ -122,7 +122,10 @@ class Mileage extends Component {
                             keyboardType="numeric"
                             value={this.state.mileage}
                             onChangeText={this.handleMileageChange}
-                            onSubmitEditing={() => { this.secondTextInput.focus(); }}
+                            onSubmitEditing={() => {
+                                if (this.state.mileage !== '')
+                                    this.secondTextInput.focus();
+                            }}
                             blurOnSubmit={false}
                             >
                         </TextInput>
@@ -205,7 +208,7 @@ const styles = StyleSheet.create({
         height: 400,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor:theme.colors.primary
+        backgroundColor: theme.colors.primary
     },
     disabled: {
         opacity: 0.3
@@ -242,7 +245,7 @@ const styles = StyleSheet.create({
     },
     openModalButton: {
         borderRadius: 12,
-        backgroundColor: theme.colors.secondary,
+        backgroundColor: theme.colors.mainBlue,
         opacity: 1,
         top: 5,
         left: 5,

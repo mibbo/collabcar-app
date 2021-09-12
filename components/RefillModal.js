@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
    },
    openModalButton: {
       borderRadius: 12,
-      backgroundColor: theme.colors.secondary,
+      backgroundColor: theme.colors.mainBlue,
       opacity: 1,
       top: 5,
       left: 5,
