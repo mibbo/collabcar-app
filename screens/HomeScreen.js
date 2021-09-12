@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Button, TextInput, Keyboard, ScrollView } from 
 import firebase from 'firebase';
 import CustomButton from '../components/CustomButton'
 import colors from '../assets/colors'
+import {theme} from '../styles.js'
 import MileageModal from '../components/MileageModal'
 import RefillModal from '../components/RefillModal'
 import Balance from '../components/Balance';
@@ -71,7 +72,7 @@ class HomeScreen extends Component {
 
    render() {
       return (
-         <View style={{ flex: 1, backgroundColor: colors.bgMain }}>
+         <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
             <View
                style={{
                   flex: 1,
